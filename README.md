@@ -20,4 +20,16 @@ Filebeat сразу после установки выплюнул много о
 
 ![docker](img/1.JPG)   
 
-![curl](img/2.JPG) 
+![curl](img/2.JPG)   
+
+---  
+
+
+### Задание 2. Kibana  
+
+Установите и запустите Kibana.  
+
+
+*Приведите скриншот интерфейса Kibana на странице http://<ip вашего сервера>:5601/app/dev_tools#/console, где будет выполнен запрос GET /_cluster/health?pretty.*  
+
+### Решение: 
