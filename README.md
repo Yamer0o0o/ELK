@@ -65,8 +65,19 @@ Filebeat сразу после установки выплюнул много о
 
 Видим файлбит и на самом эластике:    
 
-![ind](img/indicies.JPG)
+![ind](img/indicies.JPG)  
 
+Мои контейнеры:  
+
+![docker](my_cont.JPG)   
+
+Логи **docker logs** логстэша. Не вижу ничего, в чем могла бы быть проблема:  
+
+![docker](last_logs.JPG)   
+
+На файл /home/vagrant/nginxlogs/access.log, на который смотрит logstash раздал chmod 777.  
+
+Не уепляет и все. Второй день бьюсь. ЧТо делать? Где косяк? Все файлы конфигурации смотрите в docker-compose папке.  
 
 
 
