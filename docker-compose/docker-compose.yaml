@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3'
 
 services:
   # Elasticsearch Docker Images: https://www.docker.elastic.co/
@@ -23,6 +23,18 @@ services:
       - 9200:9200
       - 9300:9300
 
+  logstash:
+    container_name: logstash
+    image: logstash:8.8.1
+    ports:
+      - "9600:9600"
+    volumes:
+      - /home/vagrant/logstash.conf:/usr/share/logstash/config/logstash.conf
+      - /home/vagrant/logstash.yml:/usr/share/logstash/config/logstash.yml
+    command: logstash -f /usr/share/logstash/config/logstash.conf
+    depends_on:
+      - elasticsearch
+
   kibana:
     container_name: kibana
     image: kibana:7.17.9
@@ -38,9 +50,17 @@ services:
     command: --strict.perms=false
     user: root
     volumes:
-      - /projects/test/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - /home/vagrant/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - /var/lib/docker:/var/lib/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock
+
+  nginx:
+    image: nginx:1.25
+    ports:
+      - 80:80
+    volumes:
+      - ./nginxlog:/var/log/nginx
+    restart: always
 
 volumes:
   elasticsearch-data:
