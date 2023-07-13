@@ -69,11 +69,11 @@ Filebeat сразу после установки выплюнул много о
 
 Мои контейнеры:  
 
-![docker](my_cont.JPG)   
+![cont](img/my_cont.JPG)   
 
 Логи **docker logs** логстэша. Не вижу ничего, в чем могла бы быть проблема:  
 
-![docker](last_logs.JPG)   
+![docker_logs](img/last_logs.JPG)   
 
 На файл /home/vagrant/nginxlogs/access.log, на который смотрит logstash раздал chmod 777.  
 
