@@ -120,7 +120,33 @@ output {
 Да, я понимаю, что, вероятно, неправильно запускать контейнер с logstash под рутом. Видимо, он не просто так поднимается под своим пользователем. И, полагаю, нужно добавить этого пользователя в эластик, но на данном этапе я не стал копать глубже.
 
 
-Теперь попробуем перекинуть поставку логов с logstash на filebeat.  
+Теперь попробуем перекинуть поставку логов с logstash на filebeat.    
+
+Правим наш уже существующий файл **filebeat.yaml** на поставку логов из access.log Nginx'а:  
+
+```  
+filebeat.inputs:
+- type: log
+  paths:
+    - '/usr/share/filebeat/nginx/access.log'
+
+#processors:
+#- add_docker_metadata:
+#    host: "unix:///var/run/docker.sock"
+
+#- decode_json_fields:
+#    fields: ["message"]
+#    target: "json"
+#    overwrite_keys: true
+
+output.elasticsearch:
+  hosts: ["10.22.97.59:9200"]
+  indices:
+    - index: "filebeat_nginx-%{[agent.version]}-%{+yyyy.MM.dd}"
+
+logging.json: true
+logging.metrics.enabled: false
+```
 
 
 
