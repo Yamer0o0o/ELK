@@ -197,7 +197,9 @@ logging.metrics.enabled: false
 
 ![yes3](img/fbkb.JPG)  
 
-Все отлично!
+Все отлично!  
+
+P.S. Все файлы конфигураций и docker-compose файл лежат в папке, приложенной к данному репозиторию.
 
 
 
