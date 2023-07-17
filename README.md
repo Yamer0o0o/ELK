@@ -124,7 +124,7 @@ output {
 
 Правим наш уже существующий файл **filebeat.yaml** на поставку логов из access.log Nginx'а:  
 
-```  
+```
 filebeat.inputs:
 - type: log
   paths:
@@ -146,6 +146,7 @@ output.elasticsearch:
 
 logging.json: true
 logging.metrics.enabled: false
+
 ```
 
 
