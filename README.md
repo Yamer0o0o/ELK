@@ -147,7 +147,17 @@ output.elasticsearch:
 logging.json: true
 logging.metrics.enabled: false
 
-```
+```  
+
+Смотрим, схватил ли его эластик:  
+
+![yes3](img/fbng.JPG)  
+
+Схватил. Теперь создадим еще один паттерн в кибане, добавим новый индекс и посмотрим, все ли хорошо:  
+
+![yes3](img/fbkb.JPG)  
+
+Все отлично!
 
 
 
