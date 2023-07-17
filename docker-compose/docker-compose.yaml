@@ -26,12 +26,15 @@ services:
   logstash:
     container_name: logstash
     image: logstash:8.8.1
+    user: root #сменил дефолтного юзера на рута
     ports:
       - "9600:9600"
     volumes:
       - /home/vagrant/logstash.conf:/usr/share/logstash/config/logstash.conf
       - /home/vagrant/logstash.yml:/usr/share/logstash/config/logstash.yml
-    command: logstash -f /usr/share/logstash/config/logstash.conf
+      - /home/vagrant/output.txt:/usr/share/logstash/output.txt
+      - ./nginxlog:/usr/share/logstash/nginx # данный волум был прокидываю для трех контейнеров и хоста, чтобы актуальные логи могли считываться
+    command: logstash -f /usr/share/logstash/config/logstash.conf # была добавлена команда, которая запускает логстэш используя проброшенный конфиг
     depends_on:
       - elasticsearch
 
@@ -53,13 +56,14 @@ services:
       - /home/vagrant/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - /var/lib/docker:/var/lib/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./nginxlog:/usr/share/filebeat/nginx # данный волум был прокидываю для трех контейнеров и хоста, чтобы актуальные логи могли считываться
 
   nginx:
     image: nginx:1.25
     ports:
       - 80:80
     volumes:
-      - ./nginxlog:/var/log/nginx
+      - ./nginxlog:/var/log/nginx # данный волум был прокидываю для трех контейнеров и хоста, чтобы актуальные логи могли считываться
     restart: always
 
 volumes:
