@@ -110,7 +110,47 @@ output {
 Но, даже в этом случае, данные не записывались в *output.txt*.  
 После этого я решил посмотреть каким юзером я являюсь в контейнере и, выполнив команду **docker exec <container_id> whoami** обнаружил себя пользователем logstash.  
 
-Что ж. Правим docker-compose.yaml файл, пересобираем контейнер с необходимой конфигурацией и.....**НАКОНЕЦ-ТО!!!**:    
+Что ж. Правим docker-compose.yaml файл, пересобираем контейнер с необходимой конфигурацией:  
+```
+input {
+        file {
+        path => "/usr/share/logstash/nginx/access.log"
+        start_position => "beginning"
+        }
+}
+
+
+filter {
+        grok {
+        match => { "message" => "%{IPORHOST:remote_ip} - %{DATA:user_name}
+        \[%{HTTPDATE:access_time}\] \"%{WORD:http_method} %{DATA:url}
+        HTTP/%{NUMBER:http_version}\" %{NUMBER:response_code} %{NUMBER:body_sent_bytes}
+        \"%{DATA:referrer}\" \"%{DATA:agent}\"" }
+        }
+        mutate {
+        remove_field => [ "host" ]
+        }
+}
+
+
+
+#output {
+#
+#         file {
+#         path => "/usr/share/logstash/output.txt"
+#         }
+#
+#}
+
+
+output {
+        elasticsearch {
+        hosts => "10.22.97.59:9200"
+        data_stream => "true"
+        }
+}
+```  
+и.....**НАКОНЕЦ-ТО!!!**:    
 
 
 ![yes1](img/yes1.JPG)  
