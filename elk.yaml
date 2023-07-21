@@ -1,0 +1,6 @@
+---
+- hosts: server
+  gather_facts: true
+  become: true
+  roles:
+   - elk
